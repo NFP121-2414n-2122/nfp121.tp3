@@ -9,33 +9,83 @@ public class Pile2<T> implements PileI<T>{
     /** par délégation : utilisation de la class Stack */
     private Stack<T> stk;
     /** la capacité de la pile */
-    private int capacité;
+    private int capacite;
 
     /** Création d'une pile.
      * @param taille la "taille maximale" de la pile, doit être > 0
      */
     public Pile2(int taille){
-        // à compléter
+        stk = new Stack<T>();
+        capacite = taille;
     }
 
     public Pile2(){
-        // à compléter
+        stk = new Stack<T>();
+        capacite = 0;
     }
 
     public void empiler(T o) throws PilePleineException{
-        // à compléter
+        if (estPleine()) throw new PilePleineException();
+        stk.push(o);
+        this.capacite++;
     }
 
     public T depiler() throws PileVideException{
-        // à compléter
+          if (estVide()) throw new PileVideException();
+          this.capacite--;
+          return stk.pop();
     }
 
     public T sommet() throws PileVideException{
-        // à compléter
+        return null;
     }
 
-    // recopier ici toutes les autres méthodes
-    // qui ne sont pas modifiées en fonction
-    // du type des éléments de la pile
+    public int capacite() {
+        if (!estVide())
+		{
+			int ct = 0;
+			for (int i=0; i<stk.size(); i++){
+			   ct++;
+			  }
+			return ct;
+		}
+		else return 0;
+    }
 
+    public int taille() {
+	return capacite;
+    }
+
+    public boolean estVide() {
+        return capacite == 0;
+    }
+
+    public boolean estPleine() {
+        return capacite == stk.size();
+    }
+
+    public boolean equals(Object o) {
+        return o.equals(stk);
+        
+    //    for (int i=0; i<zone.length; i++){
+    //    if (zone[i] == o[i]) { continue; } 
+    //    else { return false; }
+    //    }
+    }
+
+    // fonction fournie
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    public String toString() {
+        StringBuffer sb = new StringBuffer("[");
+        for (int i = capacite - 1; i >= 0; i--) {
+            sb.append(" " + stk.get(i));
+            if (i > 0)
+                sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 } // Pile2
